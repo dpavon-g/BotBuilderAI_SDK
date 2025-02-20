@@ -22,7 +22,9 @@ def callTelegramBot():
     OpenAi = AI(openAI_key, assistant_id)
     
     async def botAnswer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        response = OpenAi.interactWithAssistant(update.message.text)
+        user_id = update.message.from_user.id
+        message = update.message.text
+        response = OpenAi.interactWithAssistant(message, user_id)
         await update.message.reply_text(response)
     
     app = ApplicationBuilder().token(token).build()
