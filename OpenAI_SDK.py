@@ -26,10 +26,13 @@ class AI:
         self.api_key = api_key
         self.assistant_id = assistant_id
     
-    def interactWithAssistant(self, message, user_id = None):
+    def interactWithAssistant(self, message, memory = True, user_id = None):
         client = OpenAI(api_key=self.api_key)
         
-        threadID = self.getThreadID(user_id, client)
+        if (memory == True):
+            threadID = self.getThreadID(user_id, client)
+        else:
+            trheadID = client.beta.threads.create().id
 
         message = client.beta.threads.messages.create(
             thread_id=threadID,

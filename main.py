@@ -24,13 +24,12 @@ def callTelegramBot():
     async def botAnswer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         user_id = update.message.from_user.id
         message = update.message.text
-        response = OpenAi.interactWithAssistant(message, user_id)
+        response = OpenAi.interactWithAssistant(message, True, user_id)
         await update.message.reply_text(response)
     
     app = ApplicationBuilder().token(token).build()
     app.add_handler(MessageHandler(filters.TEXT, botAnswer))
+    print("Bot is running...")
     app.run_polling()
 
 callTelegramBot()
-
-# print(getRespuesta("Hola, ¿cómo estás?"))
